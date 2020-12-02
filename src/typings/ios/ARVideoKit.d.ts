@@ -42,6 +42,7 @@ declare const enum ARVideoOrientation {
   AlwaysLandscape = 2
 }
 
+@NativeClass()
 declare class ARView extends NSObject {
 
   static alloc(): ARView; // inherited from NSObject
@@ -196,6 +197,7 @@ declare var RenderARDelegate: {
   prototype: RenderARDelegate;
 };
 
+@NativeClass()
 declare class ViewAR extends NSObject {
 
   static alloc(): ViewAR; // inherited from NSObject

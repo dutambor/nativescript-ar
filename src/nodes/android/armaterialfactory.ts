@@ -1,6 +1,6 @@
-import { Color } from "tns-core-modules/color";
-import { Folder, knownFolders, path } from "tns-core-modules/file-system";
-import * as utils from "tns-core-modules/utils/utils";
+import { Color } from "@nativescript/core";
+import { Folder, knownFolders, path } from "@nativescript/core";
+import { Utils as utils } from "@nativescript/core";
 import { ARMaterial, ARMaterialProperty, ARMaterialWrapMode } from "../../ar-common";
 
 export class ARMaterialFactory {

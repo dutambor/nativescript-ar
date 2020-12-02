@@ -1,4 +1,4 @@
-import * as application from "tns-core-modules/application";
+import { Application as application } from "@nativescript/core";
 
 const DEFAULT_FRAMERATE = 30;
 const DEFAULT_BITRATE = 10000000;

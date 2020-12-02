@@ -1,4 +1,4 @@
-import * as utils from "tns-core-modules/utils/utils";
+import { Utils as utils } from "@nativescript/core";
 import { ARAddVideoOptions, ARVideoNode } from "../../ar-common";
 import { ARCommonNode } from "./arcommon";
 

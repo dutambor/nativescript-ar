@@ -1,4 +1,4 @@
-import * as application from 'tns-core-modules/application';
+import { Application as application } from '@nativescript/core';
 import { ARAddVideoOptions, ARVideoNode } from "../../ar-common";
 import { ARCommonNode } from "./arcommon";
 

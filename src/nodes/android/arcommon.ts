@@ -1,5 +1,5 @@
-import { screen } from "tns-core-modules/platform";
-import * as utils from "tns-core-modules/utils/utils";
+import { Screen as screen } from "@nativescript/core";
+import { Utils as utils } from "@nativescript/core";
 import { ARAddOptions, ARCommonNode as IARCommonNode, ARDimensions2D, ARNodeInteraction, ARPosition, ARRotation, ARScale } from "../../ar-common";
 
 declare const java: any;

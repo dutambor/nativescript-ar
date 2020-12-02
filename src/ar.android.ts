@@ -1,8 +1,8 @@
-import * as application from "tns-core-modules/application";
-import { ImageSource } from "tns-core-modules/image-source";
-import * as utils from "tns-core-modules/utils/utils";
+import { Application as application } from "@nativescript/core";
+import { ImageSource, AndroidApplication } from "@nativescript/core";
+import { Utils as utils } from "@nativescript/core";
 import { AR as ARBase, ARAddBoxOptions, ARAddImageOptions, ARAddModelOptions, ARAddOptions, ARAddPlaneOptions, ARAddSphereOptions, ARAddTextOptions, ARAddTubeOptions, ARAddVideoOptions, ARCommonNode, ARDebugLevel, ARFaceTrackingActions, ARImageTrackingActions, ARImageTrackingOptions, ARLoadedEventData, ARPlaneDetectionOrientation, ARPlaneTappedEventData, ARPosition, ARRotation, ARTrackingFaceEventData, ARTrackingImageDetectedEventData, ARUIViewOptions, ARVideoNode } from "./ar-common";
-import { TNSArFragmentForImageDetection } from "./imagefragment.android";
+import { createImageDetection, TNSArFragmentForImageDetection } from "./imagefragment.android";
 import { ARBox } from "./nodes/android/arbox";
 import { ARGroup } from "./nodes/android/argroup";
 import { ARImage } from "./nodes/android/arimage";
@@ -150,7 +150,7 @@ const getOriginAnchor = () => {
   return _origin;
 };
 
-
+@NativeClass()
 class TNSArFragmentForFaceDetection extends com.google.ar.sceneform.ux.ArFragment {
 
   constructor() {
@@ -340,7 +340,7 @@ export class AR extends ARBase {
 
     } else {
       if (this.trackingMode === "IMAGE") {
-        _fragment = new TNSArFragmentForImageDetection();
+        _fragment = createImageDetection();
 
         _fragment.getImageDetectionSceneView().then(sceneView => {
 
@@ -562,10 +562,6 @@ export class AR extends ARBase {
     return _fragment;
   }
 
-  get android(): any {
-    return this.nativeView;
-  }
-
   togglePlaneVisibility(to: boolean): void {
     _fragment.getArSceneView().getPlaneRenderer().setVisible(to);
   }
@@ -674,7 +670,7 @@ export class AR extends ARBase {
   }
 
   trackImage(options: ARImageTrackingOptions): void {
-    if (!(_fragment instanceof TNSArFragmentForImageDetection)) {
+    if (!(_fragment.isImageDetection)) {
       throw "On Android, this is only supported in trackingMode: IMAGE";
     }
 
@@ -709,17 +705,17 @@ export class AR extends ARBase {
       if (args.requestCode === permissionRequestCode) {
         for (let i = 0; i < args.permissions.length; i++) {
           if (args.grantResults[i] === android.content.pm.PackageManager.PERMISSION_DENIED) {
-            application.off(application.AndroidApplication.activityRequestPermissionsEvent, onPermissionEvent);
+            application.off(AndroidApplication.activityRequestPermissionsEvent, onPermissionEvent);
             reject && reject("Please allow access to external storage and try again.");
             return;
           }
         }
-        application.off(application.AndroidApplication.activityRequestPermissionsEvent, onPermissionEvent);
+        application.off(AndroidApplication.activityRequestPermissionsEvent, onPermissionEvent);
         onPermissionGranted();
       }
     };
 
-    application.android.on(application.AndroidApplication.activityRequestPermissionsEvent, onPermissionEvent);
+    application.android.on(AndroidApplication.activityRequestPermissionsEvent, onPermissionEvent);
 
     AppPackageName.ActivityCompat.requestPermissions(
         application.android.foregroundActivity || application.android.startActivity,
